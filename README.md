@@ -1,5 +1,8 @@
 # MCFGN
 Cyclic Translations Between Pathomics and Genomics Improve Automatic Cancer Diagnosis from Whole Slide Images
+![Alt text](/imgs/model.jpg "Overview of our proposed MCFGN model")
+Overview of our proposed MCFGN model, comprising three modules: (a) self-supervised
+pretraining module; (b) hierarchical WSI feature construction module; (c) cyclic feature generation across modalities module. Our model draws inspiration from bidirectional translation in natural language processing, aiming to harness joint representation developed in modality translation, showcasing potential applications in cancer diagnosis. The key advantage of our MCFGN model is its reliance solely on WSIs during the testing phase, simplifying the diagnostic process.
 
 ## Pre-requisites:
 * Linux
