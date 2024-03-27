@@ -9,6 +9,9 @@ pretraining module; (b) hierarchical WSI feature construction module; (c) cyclic
 * NVIDIA GPU (Test on P100 * 4)
 * install requirements via pip3 install -r requirements.txt
 
+## Datasets:
+Two large cohorts of H&E stained WSIs from TCGA data are utilized in this study. The first cohort consists of 1133 TCGA breast cancer WSIs, each accompanied by clinical diagnoses and genetic information. The second cohort consists of 1053 TCGA lung caner WSIs, also accompanied by clinical diagnoses and genetic information. The evaluated tasks include: (1) Subtyping of invasive breast cancer (i.e., Invasive Ductal Carcinoma (IDC) vs Invasive Lobular Carcinoma (ILC)); (2) Prediction of biomarker status for breast cancer patients, including ER, PR, and HER2; (3) Subtyping of non-small cell lung cancer (i.e., Lung Adenocarcinoma (LUAD) vs Lung Squamous Cell Carcinoma (LUSC)); (4) Prediction of Tumor mutation burden (TMB) for lung cancer patients.
+
 ## 0.1 Pre-processing:  Genetic Data
 The gene expression data of cancer patients were retrieved from the official website of TCGA database.
 The pre-processing details are as follows:
