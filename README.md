@@ -9,7 +9,15 @@ pretraining module; (b) hierarchical WSI feature construction module; (c) cyclic
 * NVIDIA GPU (Test on P100 * 4)
 * install requirements via pip3 install -r requirements.txt
 
-## 0. Patch Extraction
+## 0.1 Pre-processing:  Genetic Data
+The gene expression data of cancer patients were retrieved from the official website of TCGA database.
+The pre-processing details are as follows:
+* The log transformation, i.e., $x{^'} = log_2(x+1)$, is applied on each gene's expression value $x$ in the gene expression data, resulting in updated gene expression values.
+* Genes with a missing expression rate exceeding the $10\%$ threshold are eliminated from the dataset as they are not suitable for imputation. For the remaining missing entries in the gene expression data, a nearest neighbor imputation method~\cite{beretta2016nearest} is employed to fill in the values.
+* The gene expression data undergo z-score normalization, calculated as follows: $z = (x - \mu ) / \sigma$, where $\mu$ is the mean, $\sigma$ is the standard deviation, and $x$ represents the original value normalized by the standard deviation units away from the mean.
+* The Cox proportional hazards model~\cite{xu2022spatial} is employed to identify genes highly correlated with patients' overall survival risks. The number of selected genes matches the number of WSI-level features, ensuring consistent cyclic translations across modalities.
+
+## 0.2 Pre-processing: Patch Extraction
 This step is based on CLAM tissue segmentation and patching code.
 
 The first step focuses on segmenting the tissue and excluding any holes. The segmentation of specific slides can be adjusted by tuning the individual parameters (e.g. dilated vessels appearing as holes may be important for certain sarcomas.) The digitized whole slide image data are stored under a folder named DATA_DIRECTORY
