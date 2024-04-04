@@ -83,3 +83,5 @@ where each .h5 file contains an array of extracted features along with their pat
 
 Also, we extracted features at 40× magnification for [4096 × 4096] image regions. Other settings are the same as before. But, each *.pt file is a [M × 256 × 384]-sized Tensor containing extracted 384-dim embeddings for M regions in the WSI, which each region represented as a 256-length sequence of [256 × 256] patch embeddings.
 
+## 3.0 Weakly-Supervised Training
+Following ViT-16/256 pretraining and pre-extracting instance-level [256 × 256] features using ViT-16, we extend the publicly-available CLAM scaffold code for running 5-fold cross-validation experiments as well as implement several of the current weakly-supervised baselines.
