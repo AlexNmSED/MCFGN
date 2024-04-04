@@ -1,5 +1,6 @@
 # MCFGN
 Cyclic Translations Between Pathomics and Genomics Improve Automatic Cancer Diagnosis from Whole Slide Images
+(Reconstructing)
 ![Alt text](/imgs/model.jpg "Overview of our proposed MCFGN model")
 Overview of our proposed MCFGN model, comprising three modules: (a) self-supervised
 pretraining module; (b) hierarchical WSI feature construction module; (c) cyclic feature generation across modalities module. Our model draws inspiration from bidirectional translation in natural language processing, aiming to harness joint representation developed in modality translation, showcasing potential applications in cancer diagnosis. The key advantage of our MCFGN model is its reliance solely on WSIs during the testing phase, simplifying the diagnostic process.
@@ -60,3 +61,25 @@ The masks folder contains the segmentation results (one image per slide). The pa
 This work is built using [timm](https://github.com/rwightman/pytorch-image-models/tree/master/timm), [DeiT](https://github.com/facebookresearch/deit), [DINO](https://github.com/facebookresearch/dino
 ), [MoCo v3](https://github.com/facebookresearch/moco-v3), [BEiT](https://github.com/microsoft/unilm/tree/master/beit), [MAE-priv](https://github.com/BUPT-PRIV/MAE-priv), and [MAE](https://github.com/facebookresearch/mae) repositories.
 Installation and preparation follow that repo.
+
+## 2.0 Feature Extraction
+Followed by using the publicly-available CLAM library:
+'''
+CUDA_VISIBLE_DEVICES=0,1 python extract_features_fp.py --data_h5_dir DIR_TO_COORDS --data_slide_dir DATA_DIRECTORY --csv_path CSV_FILE_NAME --feat_dir FEATURES_DIRECTORY --batch_size 512 --slide_ext .svs
+'''
+The above command expects the coordinates .h5 files to be stored under DIR_TO_COORDS and will use 2 GPUs (0 and 1) and to extract 384-dim features from each tissue patch for each slide and produce the following folder structure:
+'''
+FEATURES_DIRECTORY/
+    ├── h5_files
+            ├── slide_1.h5
+            ├── slide_2.h5
+            └── ...
+    └── pt_files
+            ├── slide_1.pt
+            ├── slide_2.pt
+            └── ...
+'''
+where each .h5 file contains an array of extracted features along with their patch coordinates (note for faster training, a .pt file for each slide is also created for each slide, containing just the patch features). Each *.pt file is a [M × 384]-sized Tensor containing extracted 384-dim embeddings for M patches in the WSI.
+
+Also, we extracted features at 40× magnification for [4096 × 4096] image regions. Other settings are the same as before. But, each *.pt file is a [M × 256 × 384]-sized Tensor containing extracted 384-dim embeddings for M regions in the WSI, which each region represented as a 256-length sequence of [256 × 256] patch embeddings.
+
